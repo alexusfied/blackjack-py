@@ -74,29 +74,41 @@ def ask_name():
     player_name = input('What is your name? ')  
     return player_name
 
-def ask_money():
-    player_money = int(input("How much money do you want to put in your bank? "))
+def convertibleToInt(value):
+    try:
+        valueInt = int(value)
+        return True
+    except:
+        return False
     
+def ask_money():
+    player_money = input("How much money do you want to put in your bank? ")
+    if (convertibleToInt(player_money)):
+        return int(player_money)
     while type(player_money) != int:
-        player_money = int(input("Sorry, didn't understand. Please type in a number: "))
-        
+        player_money = input("That's not a number. How much do you want to put in your bank? ")
+        if (convertibleToInt(player_money)):
+            player_money = int(player_money)    
     return player_money
 
 def ask_raise():
     r4ise = int(input("By how much do you want to raise? "))
-    
-    while type(r4ise) != int:
-        r4ise = int(input("Sorry, didn't understand. Please type in a number: "))
-    
+    if (convertibleToInt(r4ise)):
+        return int(r4ise)
+    while type(r4ise != int):
+        r4ise = input("That's not a number. How much do you want to raise? ")
+        if (convertibleToInt(r4ise)):
+            r4ise = int(r4ise)    
     return r4ise
 
-def ask_wager():
-    try:
-        wager = int(input("How much do you want to wager? "))
-    except:
-        while type(wager) != int:
-            wager = int(input("Sorry, I didn't understand. Please type in a number:  "))
-        
+def ask_wager():    
+    wager = input("How much do you want to wager? ")
+    if (convertibleToInt(wager)):
+        return int(wager)
+    while type(wager) != int:
+        wager = input("That's not a number. How much do you want to wager? ")
+        if (convertibleToInt(wager)):
+            wager = int(wager)    
     return wager
 
 def play_again():

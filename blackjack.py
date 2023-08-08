@@ -28,9 +28,12 @@ class Deck:
 class Player:
     def __init__(self,name,total_money):
         self.name = name
+        self.namePoss = self.name + "'s" if self.name[-1] != "s" else self.name + "'"
         self.hand = []
         self.total_money = total_money    
     def hit(self,drawn_card):
+        print(f"{self.name} has drawn {drawn_card}")
+        print("")
         self.hand.append(drawn_card)    
     def stand(self):
         pass
@@ -42,9 +45,11 @@ class Player:
         self.total_money = self.total_money - self.r4ise_amount  
     def show_hand(self):
         count = 0
+        print(f"{self.namePoss} hand:")
         for i in self.hand:
-            print(f"{self.name}: {self.hand[count]}")
-            count += 1      
+            print(f"{self.hand[count]}")
+            count += 1 
+        print("\n")     
     def hand_value(self):
         hand_value = 0
         counter = 0 
@@ -82,16 +87,18 @@ def convertibleToInt(value):
         return False
     
 def ask_money():
+    print("-------------------------------")
     player_money = input("How much money do you want to put in your bank? ")
     if (convertibleToInt(player_money)):
         return int(player_money)
     while type(player_money) != int:
         player_money = input("That's not a number. How much do you want to put in your bank? ")
         if (convertibleToInt(player_money)):
-            player_money = int(player_money)    
+            player_money = int(player_money) 
     return player_money
 
 def ask_raise():
+    print("-------------------------------")
     r4ise = int(input("By how much do you want to raise? "))
     if (convertibleToInt(r4ise)):
         return int(r4ise)
@@ -101,7 +108,8 @@ def ask_raise():
             r4ise = int(r4ise)    
     return r4ise
 
-def ask_wager():    
+def ask_wager():
+    print("-------------------------------")    
     wager = input("How much do you want to wager? ")
     if (convertibleToInt(wager)):
         return int(wager)
@@ -113,6 +121,7 @@ def ask_wager():
 
 def play_again():
     again = False
+    print("-------------------------------")
     user_input = input("Do you want to keep playing? ")
     possible_answers = ["Yes","No"]
     while user_input.capitalize() not in possible_answers:
@@ -138,18 +147,19 @@ if (__name__ == "__main__"):
         Game_Deck.shuffle()
         first_cards = []
 
-        print("The game is on!")
+        print("-------------------------------")
+        print("The game is on!\n")
 
         for i in range (2):
             first_cards.append(Game_Deck.deal_one())
 
         Player_1.hit(first_cards[0])
         Player_1.show_hand()
-        print(f"{Player_1.name}'s current hand value is {Player_1.hand_value()}.")
+        print(f"{Player_1.namePoss} current hand value is {Player_1.hand_value()}.\n")
 
         dealer.hit(first_cards[1])
         dealer.show_hand()
-        print(f"Dealers current hand value is {dealer.hand_value()}.")
+        print(f"Dealer's current hand value is {dealer.hand_value()}.\n")
 
         print(f"{Player_1.name} has {Player_1.total_money} in his bank.")
         p1_wager = Player_1.wager(ask_wager())
@@ -169,6 +179,7 @@ if (__name__ == "__main__"):
         while game_on:
 
             if turn == "Player 1" and player1_stand == False:
+                print("-------------------------------")
                 input_p1 = input("Do you want to hit, stand or raise? ")
                 possible_answers = ["Hit","Stand","Raise"]
 
@@ -176,11 +187,12 @@ if (__name__ == "__main__"):
                     input_p1 = input("Sorry, didn't understand. Do you want to hit, stand or raise? ")
 
                 if input_p1.capitalize() == "Hit":
+                    print("-------------------------------")
                     card = Game_Deck.deal_one()
                     Player_1.hit(card)
                     Player_1.show_hand()
                     p1_hand_value = Player_1.hand_value()
-                    print(f"Current hand value is {p1_hand_value}.")
+                    print(f'{Player_1.namePoss} hand value is {p1_hand_value}.\n')
 
                     if p1_hand_value < 21:
                         pass
@@ -228,7 +240,7 @@ if (__name__ == "__main__"):
                     dealer.hit(card)
                     dealer.show_hand()
                     dealer_hand_value = dealer.hand_value()
-                    print(f"Current hand value is {dealer_hand_value}.")
+                    print(f"Dealer's hand value is {dealer_hand_value}.\n")
 
                 else:
                     dealer.stand()
